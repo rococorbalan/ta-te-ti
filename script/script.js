@@ -1,15 +1,33 @@
-let gameboard = ["*", "*", "*",
-                "*", "*", "*",
-                "*", "*", "*"
-];
+const board = (function () {
+    const init = () => {
+        let gameboard = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
 
+        gameboard.display = () => {
+            console.log(gameboard[0], gameboard[1], gameboard[2]);
+            console.log(gameboard[3], gameboard[4], gameboard[5]);
+            console.log(gameboard[6], gameboard[7], gameboard[8]);
+        };
 
-function displayGameboard(gameboard) {
-    console.log(gameboard[0], gameboard[1], gameboard[2]);
-    console.log(gameboard[3], gameboard[4], gameboard[5]);
-    console.log(gameboard[6], gameboard[7], gameboard[8]);
-}
+        gameboard.checkCell = (cell) => {
+            if(gameboard[cell] === "*"){
+                return true;
+            }else {
+                return false;
+            }
+        };
 
+        gameboard.checkFullBoard = () => {
+            return (gameboard.every(cell => cell !== "*"));
+        };
+
+        return gameboard;
+
+    };
+    return { init };
+})();
+
+let gameboard = board.init();
+gameboard.display();
 
 function createPlayer(name, playerNumber) {
     let playerIcon;
@@ -27,16 +45,6 @@ function createPlayer(name, playerNumber) {
 const roco = createPlayer("roco", 1);
 const roca = createPlayer("roca", 2);
 
-
-function checkCell(gameboard, cell){
-    if(gameboard[cell] === "*"){
-        return true;
-    }else {
-        return false;
-    }
-}
-
-
 function movePlayer(player){
     let move = parseInt(prompt(`${player.name}'s turn!`));
     if(move === 2907){
@@ -45,30 +53,34 @@ function movePlayer(player){
     if((move < 0 || move > 8) || isNaN(move)){
         alert("Choose a cell between 0 and 8");
         return movePlayer(player);
-    }else if(!checkCell(gameboard, move)){
-        alert("This cell is ocuppied!");
+    }else if(!gameboard.checkCell(move)){
+        alert("This cell is occupied!");
         return movePlayer(player);
     }
     return move;
 }
 
 
-// Change this to object somehow
-function gameFlow(gameboard, player1, player2) {
-    const player1Icon = player1.getPlayerIcon();
-    const player2Icon = player2.getPlayerIcon();
-    let player1Turn = true;
-    while(!(gameboard.every(cell => cell !== "*"))){
-        if(player1Turn) {
-            gameboard[movePlayer(player1)] = player1Icon;
-            console.clear()
-            displayGameboard(gameboard);
-            player1Turn = false;
-        }else {
-            gameboard[movePlayer(player2)] = player2Icon;
-            console.clear();
-            displayGameboard(gameboard);
-            player1Turn = true;
+const gameFlow = (function () {
+    const startGame = function(gameboard, player1, player2){
+        const player1Icon = player1.getPlayerIcon();
+        const player2Icon = player2.getPlayerIcon();
+        let player1Turn = true;
+        while(!gameboard.checkFullBoard()){
+            if(player1Turn) {
+                gameboard[movePlayer(player1)] = player1Icon;
+                console.clear()
+                gameboard.display();
+                player1Turn = false;
+            }else {
+                gameboard[movePlayer(player2)] = player2Icon;
+                console.clear();
+                gameboard.display();
+                player1Turn = true;
+            }
         }
     }
-}
+
+    return { startGame };
+})();
+
