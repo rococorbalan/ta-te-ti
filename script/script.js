@@ -9,11 +9,7 @@ const board = (function () {
         };
 
         gameboard.checkCell = (cell) => {
-            if(gameboard[cell] === "*"){
-                return true;
-            }else {
-                return false;
-            }
+            return (gameboard[cell] === "*");
         };
 
         gameboard.checkFullBoard = () => {
@@ -37,28 +33,28 @@ function createPlayer(name, playerNumber) {
         playerIcon = "O";
     }
 
+    let move = (gameboard) => {
+        let moveInput = parseInt(prompt(`${name}'s turn!`));
+        if (moveInput === 2907) {
+            return;
+        }
+        if((moveInput < 0 || moveInput > 8) || isNaN(moveInput)){
+            alert("Choose a cell between 0 and 8");
+            return move(gameboard);
+        }else if(!gameboard.checkCell(moveInput)){
+            alert("This cell is occupied!");
+            return move(gameboard);
+        }
+        gameboard[moveInput] = playerIcon;
+    }
+
     const getPlayerIcon = () => playerIcon;
-    return { name, getPlayerIcon };
+    return { name, getPlayerIcon, move };
 }
 
 // Delete this when you finish lol
 const roco = createPlayer("roco", 1);
 const roca = createPlayer("roca", 2);
-
-function movePlayer(player){
-    let move = parseInt(prompt(`${player.name}'s turn!`));
-    if(move === 2907){
-        return;
-    }
-    if((move < 0 || move > 8) || isNaN(move)){
-        alert("Choose a cell between 0 and 8");
-        return movePlayer(player);
-    }else if(!gameboard.checkCell(move)){
-        alert("This cell is occupied!");
-        return movePlayer(player);
-    }
-    return move;
-}
 
 
 const gameFlow = (function () {
@@ -68,12 +64,12 @@ const gameFlow = (function () {
         let player1Turn = true;
         while(!gameboard.checkFullBoard()){
             if(player1Turn) {
-                gameboard[movePlayer(player1)] = player1Icon;
+                player1.move(gameboard);
                 console.clear()
                 gameboard.display();
                 player1Turn = false;
             }else {
-                gameboard[movePlayer(player2)] = player2Icon;
+                player2.move(gameboard);
                 console.clear();
                 gameboard.display();
                 player1Turn = true;
