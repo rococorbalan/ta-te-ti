@@ -85,6 +85,7 @@ const displayController = (function () {
 
     restartButton.addEventListener("click", () => {
         gameboard = board.init();
+        gameFlow.restartGame();
         displayController.displayBoard(gameboard);
     })
 
@@ -128,14 +129,14 @@ const gameFlow = (function () {
             if(gameboard.winCondition() === false){
                 console.log("tie");
                 finishedGame = true;
-                console.log(finishedGame);
+                toggleCurrentPlayer();
             }
         }
         if(currentPlayer === player1){
             if(gameboard.winCondition()) {
                 console.log("player 1 wins");
                 finishedGame = true;
-                console.log(finishedGame);
+                toggleCurrentPlayer();
             }else {
                 toggleCurrentPlayer();
             }
@@ -143,7 +144,7 @@ const gameFlow = (function () {
             if(gameboard.winCondition()) {
                 console.log("player 2 wins");
                 finishedGame = true;
-                console.log(finishedGame);
+                toggleCurrentPlayer();
             }else {
                 toggleCurrentPlayer();
             }
@@ -151,8 +152,9 @@ const gameFlow = (function () {
     }
 
     const getFinishedGame = () => finishedGame;
+    const restartGame = () => finishedGame = false;
 
-    return { handleTurn, getFinishedGame };
+    return { handleTurn, getFinishedGame, restartGame };
 })();
 
 
