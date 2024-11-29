@@ -8,3 +8,26 @@ body {
     background: rgb(225,225,204);
     background: linear-gradient(180deg, rgba(225,225,204,1) 0%, rgba(173,174,157,1) 100%);
 }
+
+#board {
+    border: 5px solid black;
+    width: 500px;
+    height: 500px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+}
+
+.cell {
+    border: 3px solid black;
+    font-size: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
