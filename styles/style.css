@@ -27,18 +27,11 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: -250px;
-    margin-top: -250px;
 }
 
 .cell {
     font-size: 6rem;
     font-weight: 700;
-    font-style: itali;
 
     display: flex;
     justify-content: center;
@@ -59,8 +52,39 @@ body {
 
 .pink {
     color: var(--pink);
+    -webkit-text-stroke: 4px var(--purple);
 }
 
 .blue {
     color: var(--blue);
+    -webkit-text-stroke: 4px var(--purple);
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 1000px;
+    height: 1000px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -500px;
+    margin-left: -500px;
+}
+
+.player-display {
+    text-align: center;
+    color: var(--purple);
+}
+
+.name, .score-display {
+    font-size: 1.5rem;
+}
+
+.player-display .player-icon {
+    font-size: 6rem;
+    font-weight: 700;
 }
