@@ -9,7 +9,7 @@ const board = (function () {
         };
 
         gameboard.checkCell = (cell) => {
-            return (gameboard[cell] === "*");
+            return (gameboard[cell] === "");
         };
 
         gameboard.isFull = () => {
@@ -70,9 +70,21 @@ const displayController = (function () {
     const getCells = () => cells;
     const getScoreDisplays = () => scoreDisplays;
 
+    const restartColors = () => {
+        cells.forEach(cell => {
+            cell.classList.remove("pink");
+            cell.classList.remove("blue");
+        })
+    }
+
     const displayBoard = (board) => {
         for(let i = 0; i < board.length; i++){
             cells[i].textContent = board[i];
+            if(cells[i].textContent === "X"){
+                cells[i].classList.add("pink")
+            }else if(cells[i].textContent === "O"){
+                cells[i].classList.add("blue")
+            }
         }
     }
 
@@ -83,10 +95,12 @@ const displayController = (function () {
     cells.forEach(cell => cell.addEventListener("click", (event) => {
         if(gameFlow.getFinishedGame() === false){
             let currentCell = event.currentTarget.classList[1]
-            currentPlayer.move(gameboard, currentCell);
-            displayController.displayBoard(gameboard);
+            if(gameboard.checkCell(currentCell)) {
+                currentPlayer.move(gameboard, currentCell);
+                displayController.displayBoard(gameboard);
 
-            gameFlow.handleTurn(gameboard, player1, player2);
+                gameFlow.handleTurn(gameboard, player1, player2);
+            }
         }
     }))
 
@@ -94,6 +108,7 @@ const displayController = (function () {
         gameboard = board.init();
         gameFlow.restartGame();
         displayController.displayBoard(gameboard);
+        restartColors();
     })
 
     return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays };

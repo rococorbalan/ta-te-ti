@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
+
+*{
+    font-family: "DynaPuff", 'Times New Roman', Times, serif;
+}
+
+:root {
+    --purple: #57305A;
+    --blue: #2D90B8;
+    --pink: #C7727B;
+}
+
 html {
     height: 100%;
 }
@@ -10,7 +22,6 @@ body {
 }
 
 #board {
-    border: 5px solid black;
     width: 500px;
     height: 500px;
     display: grid;
@@ -25,9 +36,31 @@ body {
 }
 
 .cell {
-    border: 3px solid black;
-    font-size: 4rem;
+    font-size: 6rem;
+    font-weight: 700;
+    font-style: itali;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 10px;
+    border-bottom: 5px solid var(--purple);
+    border-right: 5px solid var(--purple);
+}
+
+.cell:nth-of-type(9), .cell:nth-of-type(8), .cell:nth-of-type(7) {
+    border-bottom: none;
+}
+
+.cell:nth-of-type(3), .cell:nth-of-type(6), .cell:nth-of-type(9) {
+    border-right: none;
+}
+
+.pink {
+    color: var(--pink);
+}
+
+.blue {
+    color: var(--blue);
 }
