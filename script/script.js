@@ -63,7 +63,8 @@ gameboard.display();
 
 
 const displayController = (function () {
-    let cells = document.querySelectorAll(".cell");
+    const cells = document.querySelectorAll(".cell");
+    const restartButton = document.getElementById("restart")
     const getCells = () => cells
 
     const displayBoard = (board) => {
@@ -73,13 +74,19 @@ const displayController = (function () {
     }
 
     cells.forEach(cell => cell.addEventListener("click", (event) => {
-        let currentCell = event.currentTarget.classList[1]
-        currentPlayer.move(gameboard, currentCell);
-        displayController.displayBoard(gameboard);
+        if(gameFlow.getFinishedGame() === false){
+            let currentCell = event.currentTarget.classList[1]
+            currentPlayer.move(gameboard, currentCell);
+            displayController.displayBoard(gameboard);
 
-        gameFlow.handleTurn(gameboard, player1, player2);
-        
+            gameFlow.handleTurn(gameboard, player1, player2);
+        }
     }))
+
+    restartButton.addEventListener("click", () => {
+        gameboard = board.init();
+        displayController.displayBoard(gameboard);
+    })
 
     return { getCells, displayBoard };
 })();
@@ -115,28 +122,37 @@ function toggleCurrentPlayer () {
 
 
 const gameFlow = (function () {
+    let finishedGame = false;
     const handleTurn = (gameboard, player1, player2) =>{
         if(gameboard.isFull()){
             if(gameboard.winCondition() === false){
                 console.log("tie");
+                finishedGame = true;
+                console.log(finishedGame);
             }
         }
         if(currentPlayer === player1){
             if(gameboard.winCondition()) {
                 console.log("player 1 wins");
+                finishedGame = true;
+                console.log(finishedGame);
             }else {
                 toggleCurrentPlayer();
             }
         }else {
             if(gameboard.winCondition()) {
                 console.log("player 2 wins");
+                finishedGame = true;
+                console.log(finishedGame);
             }else {
                 toggleCurrentPlayer();
             }
         }
     }
 
-    return { handleTurn };
+    const getFinishedGame = () => finishedGame;
+
+    return { handleTurn, getFinishedGame };
 })();
 
 
