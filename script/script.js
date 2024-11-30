@@ -2,12 +2,6 @@ const board = (function () {
     const init = () => {
         let gameboard = ["", "", "", "", "", "", "", "", ""];
 
-        gameboard.display = () => {
-            console.log(gameboard[0], gameboard[1], gameboard[2]);
-            console.log(gameboard[3], gameboard[4], gameboard[5]);
-            console.log(gameboard[6], gameboard[7], gameboard[8]);
-        };
-
         gameboard.checkCell = (cell) => {
             return (gameboard[cell] === "");
         };
@@ -59,13 +53,12 @@ const board = (function () {
 })();
 
 let gameboard = board.init();
-gameboard.display();
-
 
 const displayController = (function () {
     const cells = document.querySelectorAll(".cell");
     const restartButton = document.getElementById("restart");
     const scoreDisplays = document.querySelectorAll(".score-display");
+    const winnerDisplay = document.querySelector(".winner-display > h1");
 
     const getCells = () => cells;
     const getScoreDisplays = () => scoreDisplays;
@@ -104,14 +97,25 @@ const displayController = (function () {
         }
     }))
 
+    const updateWinnerDisplay = (player) => {
+        if(player === false) {
+            winnerDisplay.textContent = "It's a tie!"
+        }else {
+            winnerDisplay.textContent = `${player.name} wins!`
+        }
+    }
+
+    const restartWinnerDisplay = () => {winnerDisplay.textContent = ""}
+
     restartButton.addEventListener("click", () => {
         gameboard = board.init();
         gameFlow.restartGame();
         displayController.displayBoard(gameboard);
         restartColors();
+        restartWinnerDisplay();
     })
 
-    return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays };
+    return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays, updateWinnerDisplay };
 })();
 
 
@@ -156,14 +160,14 @@ const gameFlow = (function () {
 
         if(gameboard.isFull()){
             if(gameboard.winCondition() === false){
-                console.log("tie");
+                displayController.updateWinnerDisplay(false);
                 finishedGame = true;
                 toggleCurrentPlayer();
             }
         }
         if(currentPlayer === player1){
             if(gameboard.winCondition()) {
-                console.log("player 1 wins");
+                displayController.updateWinnerDisplay(player1);
                 finishedGame = true;
                 displayController.updateScoreDisplay(scoreDisplay1, player1.updateScore());
                 toggleCurrentPlayer();
@@ -172,7 +176,7 @@ const gameFlow = (function () {
             }
         }else {
             if(gameboard.winCondition()) {
-                console.log("player 2 wins");
+                displayController.updateWinnerDisplay(player2);
                 finishedGame = true;
                 displayController.updateScoreDisplay(scoreDisplay2, player2.updateScore());
                 toggleCurrentPlayer();

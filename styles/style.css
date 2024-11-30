@@ -123,3 +123,16 @@ body {
 .button-container button:hover {
     transform: scale(1.1);
 }
+
+.winner-display {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.winner-display h1 {
+    font-size: 2.5rem;
+    color: var(--purple);
+    letter-spacing: 2px;
+    word-spacing: 15px;
+}
