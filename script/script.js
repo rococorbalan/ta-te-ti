@@ -22,6 +22,7 @@ const board = (function () {
             // Check horizontals
             for(let i = 0; i <= 6; i += 3){
                 if((gameboard[i] === gameboard[i+1] && gameboard[i] === gameboard[i+2]) && gameboard[i] !== ""){
+                    displayController.displayWinnerCells(i, i+1, i+2);
                     return true;
                 }
             }
@@ -29,17 +30,20 @@ const board = (function () {
             //Check verticals
             for(let i = 0; i <= 2; i++){
                 if((gameboard[i] === gameboard[i+3] && gameboard[i] === gameboard[i+6]) && gameboard[i] !== ""){
+                    displayController.displayWinnerCells(i, i+3, i+6);
                     return true;
                 }
             }
         
             //Check diagonal top to bottom
             if((gameboard[0] === gameboard[4] && gameboard[0] === gameboard[8]) && gameboard[0] !== ""){
+                displayController.displayWinnerCells(0, 4, 8)
                 return true;
             }
         
             //Check diagonal bottom to top
             if((gameboard[6] === gameboard[4] && gameboard[6] === gameboard[2]) && gameboard[6] !== ""){
+                displayController.displayWinnerCells(2, 4, 6)
                 return true;
             }
         
@@ -59,6 +63,8 @@ const displayController = (function () {
     const restartButton = document.getElementById("restart");
     const scoreDisplays = document.querySelectorAll(".score-display");
     const winnerDisplay = document.querySelector(".winner-display > h1");
+
+    let winnerCells;
 
     const getCells = () => cells;
     const getScoreDisplays = () => scoreDisplays;
@@ -105,17 +111,21 @@ const displayController = (function () {
         }
     }
 
-    const restartWinnerDisplay = () => {winnerDisplay.textContent = ""}
+    const displayWinnerCells = (...cellsWin) => {
+        cellsWin.forEach(cell => cells[cell].classList.add("winner"))
+        winnerCells = cellsWin;
+    }
 
     restartButton.addEventListener("click", () => {
         gameboard = board.init();
         gameFlow.restartGame();
         displayController.displayBoard(gameboard);
         restartColors();
-        restartWinnerDisplay();
-    })
+        winnerDisplay.textContent = "";
+        winnerCells.forEach(cell => cells[cell].classList.remove("winner"))
+    }) 
 
-    return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays, updateWinnerDisplay };
+    return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays, updateWinnerDisplay, displayWinnerCells };
 })();
 
 

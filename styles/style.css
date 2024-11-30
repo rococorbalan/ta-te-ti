@@ -136,3 +136,11 @@ body {
     letter-spacing: 2px;
     word-spacing: 15px;
 }
+
+.winner.blue {
+    background-color: var(--pink);
+}
+
+.winner.pink {
+    background-color: var(--blue);
+}
