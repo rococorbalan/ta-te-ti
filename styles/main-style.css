@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
+
+*{
+    font-family: "DynaPuff", 'Times New Roman', Times, serif;
+}
+
+:root {
+    --purple: #57305A;
+    --blue: #2D90B8;
+    --pink: #C7727B;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background: rgb(225,225,204);
+    background: linear-gradient(180deg, rgba(225,225,204,1) 0%, rgba(173,174,157,1) 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 span{
+    font-size: 7rem;
+    text-shadow: 0px 5px 0px rgba(87,48,90,1);
+    
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.player-input > div:nth-child(1) {
+    font-size: 1.5rem;
+    color: var(--purple);
+}
+
+.player-input > div:nth-child(2){
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.pink {
+    color: var(--pink);
+    -webkit-text-stroke: 4px var(--purple);
+}
+
+.blue {
+    color: var(--blue);
+    -webkit-text-stroke: 4px var(--purple);
+}
+
+.player-input input {
+    width: 150px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 15px;
+    border: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.button-container button{
+    all: unset;
+    
+    width: 50px;
+    height: 50px;
+
+    background-color: var(--purple);
+    border-radius: 30%;
+
+    transition: all 0.2s ease;
+}
+
+.button-container button:hover {
+    transform: scale(1.1);
+}

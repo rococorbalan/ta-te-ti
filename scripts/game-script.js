@@ -63,6 +63,7 @@ const displayController = (function () {
     const restartButton = document.getElementById("restart");
     const scoreDisplays = document.querySelectorAll(".score-display");
     const winnerDisplay = document.querySelector(".winner-display > h1");
+    const namesDisplay = document.querySelectorAll(".name")
 
     let winnerCells;
 
@@ -116,6 +117,11 @@ const displayController = (function () {
         winnerCells = cellsWin;
     }
 
+    const updateNames = (nameOne, nameTwo) => {
+        namesDisplay[0].textContent = nameOne;
+        namesDisplay[1].textContent = nameTwo;
+    }
+
     restartButton.addEventListener("click", () => {
         gameboard = board.init();
         gameFlow.restartGame();
@@ -125,7 +131,7 @@ const displayController = (function () {
         winnerCells.forEach(cell => cells[cell].classList.remove("winner"))
     }) 
 
-    return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays, updateWinnerDisplay, displayWinnerCells };
+    return { getCells, displayBoard, updateScoreDisplay, getScoreDisplays, updateWinnerDisplay, displayWinnerCells, updateNames };
 })();
 
 
@@ -149,10 +155,15 @@ function createPlayer(name, playerNumber) {
     return { name, getPlayerIcon, move, getScore, updateScore };
 }
 
-// Delete this when you finish lol
-const player1 = createPlayer("roco", 1);
-const player2 = createPlayer("roca", 2);
+
+const player1Name = localStorage.getItem("player1Name");
+const player2Name = localStorage.getItem("player2Name");
+displayController.updateNames(player1Name, player2Name);
+
+const player1 = createPlayer(player1Name, 1);
+const player2 = createPlayer(player2Name, 2);
 let currentPlayer = player1;
+
 function toggleCurrentPlayer () {
     if (currentPlayer === player1) {
         currentPlayer = player2;

@@ -5,14 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ta Te Ti!</title>
 
-    <script src="script/script.js" defer></script>
-    <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/home-script.js" defer></script>
+    <link rel="stylesheet" href="styles/main-style.css">
 
 </head>
 <body>
-    HOLAs
-    <button onclick="window.location.href='game.html'">game</button>
-    
-    
+    <div class="main-container">
+        <h1 class="title">
+            <span style="color: #C7727B">Ta</span>
+            <span style="color: rgba(225,225,204,1)">Te</span>
+            <span style="color: #2D90B8">Ti</span>
+        </h1>
+        <div class="input-container">
+            <div class="player-input">
+                <div>Player 1</div>
+                <div class="pink">X</div>
+                <div class="name-input"><input type="text" id="player1-name" placeholder="Name"></div>
+            </div>
+            <div class="player-input">
+                <div>Player 2</div>
+                <div class="blue">O</div>
+                <div class="name-input"><input type="text" id="player2-name" placeholder="Name"></div>
+            </div>
+        </div>
+        
+        <div class="button-container"><button id="play-button"><img src="images/play.svg" alt="play"></button></div>
+        
+    </div>
 </body>
 </html>
